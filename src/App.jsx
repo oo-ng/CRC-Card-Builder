@@ -1,12 +1,28 @@
-import './App.css'
 
-function App() {
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { LandingPage } from './Pages/LandingPage';
+import { HelpPage } from './Pages/HelpPage';
+
+
+
+function App
+() {
 
   return (
+
     <>
-     <h1>CRC Card Builder</h1>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<LandingPage/>}/>
+        <Route path='/help' element={<HelpPage/>}/>
+      </Routes>
+    </BrowserRouter>
+
     </>
+    
+    
   )
 }
 
 export default App
+ 
