@@ -7,6 +7,9 @@ import deleteButton from '../assets/delete.svg'
 import saveButton from '../assets/save.svg'
 import { EditOnLine } from "../Components/EditOnLine"
 import { useNavigate } from "react-router-dom"
+import { useParams } from "react-router-dom"
+
+
 
 const reducer = (state, action)=>{
     switch(action.type){
@@ -20,6 +23,7 @@ const reducer = (state, action)=>{
     }
 }
 export const SetupPage = () => {
+    const {projectId}= useParams();
     const navigate = useNavigate();
     const initialState = {
         nameOfProject:"NewProject",
@@ -34,6 +38,20 @@ export const SetupPage = () => {
     const[description, setDescription] =useState(`A New Card in ${nameOfProject}`);
     const [entries, setEntries] = useState([])
     const [cardCollection, setCardCollection] =useState([]);
+
+    useEffect(()=>{
+        if(projectId){
+            const obj=localStorage.getItem(projectId);
+            const savedInfo=JSON.parse(obj);
+            console.log(savedInfo)
+            console.log(savedInfo.cardCollection)
+
+            if(savedInfo){
+                dispatch({type: "editProjectName", payload: savedInfo.ProjectName});
+                setCardCollection(savedInfo.CardCollection)
+            }
+        }
+    },[projectId])
 
     const handleSaveProject = () =>{
         handleSaveCard();
