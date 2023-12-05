@@ -180,9 +180,9 @@ export const SetupPage = () => {
 
 
                          {entries.map((entry) => (
-                                <div key={entry.id} >
+                                <div className="border-b-2 border-black" key={entry.id} >
                                     <div className="flex flex-row justify-between">
-                                        <p> {entry.responsibilityContent}</p>
+                                        <p className="border-r-2 pr-40 border-black"> {entry.responsibilityContent}</p>
                                         <p> {entry.collaboratorContent}</p>
                                         <button onClick={() => handleDeleteResponsibilityCollaboration(entry.id)}><img src={deleteButton}/></button>
                                     </div>
