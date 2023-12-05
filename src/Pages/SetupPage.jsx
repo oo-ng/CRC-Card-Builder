@@ -54,7 +54,6 @@ export const SetupPage = () => {
     },[projectId])
 
     const handleSaveProject = () =>{
-        handleSaveCard();
         const newProject ={
             id: nameOfProject,
             ProjectName: nameOfProject,

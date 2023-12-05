@@ -32,9 +32,7 @@ export const LandingPage = () => {
       setSavedProjects(projects);
   }, []);
 
-  const openProject =()=>{
-    navigate('/setup')
-  }
+  
     return(
       
         <div className="relative w-screen h-screen overflow-auto">
@@ -46,17 +44,16 @@ export const LandingPage = () => {
             <Link to="/setup">
               <CardTemplate imgSrc={addImg} imgAlt="Description for Image">Create new Project</CardTemplate>
             </Link>
-            <CardTemplate imgSrc={addImg} imgAlt="Description for Image">Sample Project</CardTemplate>     
+                
           </div>
 
 
           <p className=' border-b-2 border-black inline-block mt-16 text-2xl'>Saved Projects</p>
           <div className="grid  grid-cols-4 gap-10 mt-6 mb-10 ">
             
-            <CardTemplate imgSrc={CRCImg} imgAlt="Description for Image">Sample Project</CardTemplate> 
             {savedProjects.map((project, index) => (
                         <Link key={index} to={`/setup/${project.id}`}>
-                          <CardTemplate key={index} imgSrc={CRCImg} imgAlt="Description for Project">
+                          <CardTemplate imgSrc={CRCImg} imgAlt="Description for Project">
                             {project.ProjectName}
                         </CardTemplate>
                         </Link>
