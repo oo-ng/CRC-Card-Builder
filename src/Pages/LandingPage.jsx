@@ -42,7 +42,7 @@ export const LandingPage = () => {
           
           <div to= "/setup" className="grid  grid-cols-4 gap-10 mt-16  ">
             <Link to="/setup">
-              <CardTemplate imgSrc={addImg} imgAlt="Description for Image">Create new Project</CardTemplate>
+              <CardTemplate imgSrc={addImg} imgAlt="Description for Image">Create New Project</CardTemplate>
             </Link>
                 
           </div>
