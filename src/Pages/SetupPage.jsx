@@ -147,9 +147,13 @@ export const SetupPage = () => {
                 {isNameOfProjectFormOpen?"":<button onClick={()=>setIsNameOfProjectFormOpen(!isNameOfProjectFormOpen)}><img src={editButton}/></button>}                
 
                 <div className="relative mt-20 flex flex-row ">
-                    <div className=" flex flex-col bg-gray-200 h-[37.5rem] w-[35rem] p-10" >
+                    <table className="min-w-[20rem] border-2 border-black ">
+                    <tbody>
                         
-
+                        
+                        {/* Class Name */}
+                         <tr>
+                         <td className="p-4 border-2 border-black bg-blue-400 whitespace-normal break-words max-w-[20rem]">
                         <EditOnLine 
                         identifier={"Class"}
                         isOpen={isNameOfCardFormOpen}
@@ -158,7 +162,11 @@ export const SetupPage = () => {
                         setNameOfEditable={setNameOfCard}
                         altText={"New Card"}
                         />
+                        </td>
+                        </tr>
 
+                        <tr>
+                         <td className="p-14 border-2 border-black whitespace-normal break-words max-w-[20rem]">
                         <EditOnLine 
                         identifier={"Description"}
                         isOpen={isDescriptionFormOpen}
@@ -168,35 +176,52 @@ export const SetupPage = () => {
                         altText={`A New Card in ${nameOfProject}`}
                         inputClasses={`h-20`}
                         />
-
-                        <div className="flex flex-row pt-2 ">
-                            <span className="text-xl border-b-2 border-black pr-28">
+                        </td>
+                        </tr>
+                      
+                        <div className="flex flex-grow justify-between ">
+                       
+                            <p className="text-xl  border-b-2 border-black pr-28 p-3" p>
                                 Responsibility
-                            </span>
-                            <span className="text-xl border-b-2 pr-32  border-black">
+                            </p>
+                            
+                            <p className="text-xl  border-b-2 pr-32  border-black p-3">
                                 Collaborators
-                            </span>
-                        </div>
+        
+                            </p>
+                            
+                            </div>
+                        
 
+                        {entries.map((entry) => (
+                                <tr key={entry.id} className="border-b-2 border-black">
+                                    <div className="flex flex-grow justify-between divide-x divide-black ">
+                                    <td className="p-2 whitespace-normal break-words max-w-[9rem]">
+                                     {entry.responsibilityContent}
+                                     
+                                </td>
 
-                         {entries.map((entry) => (
-                                <div key={entry.id} >
-                                    <div className="flex flex-row justify-between">
-                                        <p> {entry.responsibilityContent}</p>
+                                    <td className="p-2 whitespace-normal break-words max-w-[9rem]">
+    
                                         <p> {entry.collaboratorContent}</p>
+                                        </td>
                                         <button onClick={() => handleDeleteResponsibilityCollaboration(entry.id)}><img src={deleteButton}/></button>
                                     </div>
                                     
-                                </div>
+                                 </tr>
                             ))} 
+                        
 
+                         
                             
                             <div className="flex flex-row justify-center mt-auto">
-                                <button onClick={handleSaveCard} className=" border-2 bg-blue-400 mr-20 p-3 "><img src={saveButton}/>Save Card</button>
-                                
+                               
+                                <button onClick={handleSaveCard} className="border-2 bg-blue-400 mr-20 p-3 "><img src={saveButton}/>Save Card</button>
+                               
                             </div>
-                            
-                    </div>
+
+                            </tbody>    
+                    </table>
 
                     <form onSubmit={(e)=>{
                             e.preventDefault();
@@ -209,7 +234,7 @@ export const SetupPage = () => {
 
                         <div>
                             <p>Collaborator: </p>
-                            <input name="collaboratorInput" className="h-20 w-80  border-2 border-black"/>
+                            <input name="collaboratorInput" className="h-20 w-80 border-2 border-black"/>
                         </div>
 
                         <div className="flex justify-end">
@@ -226,9 +251,11 @@ export const SetupPage = () => {
                     
                         <div className="">
                             {cardCollection.map((entry) => (
-                                <div key={entry.id} className="bg-gray-200 flex flex-col mb-2">
+                                <div key={entry.id} className="bg-gray-200 flex flex-col mb-2 p-2 whitespace-normal break-words max-w-[25rem]">
                                     <p>Card Name: {entry.CardName}</p>
+                                  
                                     <p>Description: {entry.Description}</p>
+                                    
                                     <div className=" flex flex-row gap-20">
                                     <button className="m-2" onClick={() => handleDeleteSavedCard(entry.id)}>
                                         <img className="w-6  bg-red-500" src={deleteButton}/>
