@@ -5,10 +5,11 @@ import { useState } from "react"
 import editButton from '../assets/pencilEdit.svg'
 import deleteButton from '../assets/delete.svg'
 import saveButton from '../assets/save.svg'
+import downloadButton from '../assets/Download.svg'
+import uploadButton from '../assets/Upload.svg'
 import { EditOnLine } from "../Components/EditOnLine"
 import { useNavigate } from "react-router-dom"
 import { useParams } from "react-router-dom"
-
 
 
 const reducer = (state, action)=>{
@@ -34,8 +35,8 @@ export const SetupPage = () => {
     const[isNameOfProjectFormOpen, setIsNameOfProjectFormOpen] = useState(false);
     const[isNameOfCardFormOpen, setIsNameOfCardFormOpen] = useState(false);
     const[isDescriptionFormOpen, setIsDescriptionFormOpen] = useState(false);
-    const[nameOfCard, setNameOfCard] =useState("New Card");
-    const[description, setDescription] =useState(`A New Card in ${nameOfProject}`);
+    const [nameOfCard, setNameOfCard] =useState("New Card");
+    const [description, setDescription] =useState(`A New Card in ${nameOfProject}`);
     const [entries, setEntries] = useState([])
     const [cardCollection, setCardCollection] =useState([]);
 
@@ -52,6 +53,50 @@ export const SetupPage = () => {
             }
         }
     },[projectId])
+
+    const handleCardFromFile = () => {
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = '.json';
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+    
+            if (file) {
+                const reader = new FileReader();
+    
+                reader.onload = (e) => {
+                    try {
+                        const jsonData = JSON.parse(e.target.result);
+                        const { CardName, Description, Entries } = jsonData;
+                        
+                        const newEntry = {
+                            id: CardName,
+                            CardName: CardName,
+                            Description: Description,
+                            Entries: Entries,
+                        };
+
+                        setNameOfCard(newEntry.CardName);
+                        setDescription(newEntry.Description);
+                        setEntries(newEntry.Entries);
+
+                        handleEditeSavedCard(newEntry);
+
+    
+                    } catch (error) {
+                        console.error('Error loading card:', error);
+                        alert('Error loading card. Please check your file.');
+                    }
+                };
+    
+                reader.readAsText(file);
+            } else {
+                alert('Please select a file before clicking Upload.');
+            }
+        });
+    
+        fileInput.click();
+    };
 
     const handleSaveProject = () =>{
         const newProject ={
@@ -72,7 +117,8 @@ export const SetupPage = () => {
         }
     }
 
-    const handleSaveCard = () =>{
+    const handleSaveCard = () =>{        
+
         const newEntry={
             id:nameOfCard,
             CardName: nameOfCard,
@@ -126,13 +172,35 @@ export const SetupPage = () => {
         setEntries(entries.filter(entry => entry.id !== id));
     };
     
-    
+    const handleDownloadCard = (card) => {
+        const jsonData = JSON.stringify(card, null, 2); // Convert card data to JSON string with indentation
+        const blob = new Blob([jsonData], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        // Create a link element and initiate download
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${card.CardName}_CRC_Card.json`; // Set the filename using the card's name
+        document.body.appendChild(a);
+        a.click();
+
+        // Cleanup
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
     return(
 
         <>
 
             <Header/>
             <div className='m-12 '>
+                <div className="absolute right-0 mt-4 mr-4">
+                    <button onClick={handleCardFromFile} className="bg-green-400 p-2" title="Upload a CRC card">
+                        <img className="w-6" src={uploadButton} alt="Upload Button" />
+                    </button>
+                 </div>
+
                 <h2 className="inline-block text-3xl pr-4">Project Name: {isNameOfProjectFormOpen?
                     <form className=" flex flex-col" onSubmit={(e)=>{
                         e.preventDefault();
@@ -222,7 +290,7 @@ export const SetupPage = () => {
 
                             </tbody>    
                     </table>
-
+                    
                     <form onSubmit={(e)=>{
                             e.preventDefault();
                             handleAddResponsibilityCollaboratorEntry(e)}} 
@@ -257,12 +325,16 @@ export const SetupPage = () => {
                                     <p>Description: {entry.Description}</p>
                                     
                                     <div className=" flex flex-row gap-20">
-                                    <button className="m-2" onClick={() => handleDeleteSavedCard(entry.id)}>
+                                    <button className="m-2" onClick={() => handleDeleteSavedCard(entry.id)} title="Delete CRC card">
                                         <img className="w-6  bg-red-500" src={deleteButton}/>
                                     </button>
-                                    <button className="m-2"onClick={() => handleEditeSavedCard(entry)}>
+                                    <button className="m-2"onClick={() => handleEditeSavedCard(entry)} title="Edit CRC card">
                                         <img className="w-6  bg-blue-400" src={editButton}/>
                                     </button>
+                                    <button className="m-2" onClick={() => handleDownloadCard(entry)} title="Download CRC card">
+                                        <img className="w-6  bg-blue-400" src={downloadButton} alt="Download" />
+                                    </button>
+
                                     </div>
                                     
                                 </div>
@@ -285,4 +357,3 @@ export const SetupPage = () => {
         </>
     )
 }
-
