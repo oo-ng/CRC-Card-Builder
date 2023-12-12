@@ -14,7 +14,7 @@ export const EditOnLine = ({isOpen, setIsOpen, nameOfEditable, setNameOfEditable
                                 setIsOpen(!isOpen)
                             }}>
                                 <input name="input" className="border border-black pt-2 m-2 " type="text" autoFocus/>
-                                <button className="bg-blue-400 m-2 justify-items-center w-28  items-center p-2 " type="submit ">submit</button>
+                                <button className="bg-black text-white m-2 justify-items-center w-28  items-center p-2 " type="submit ">submit</button>
                             </form>
                             :nameOfEditable}
                                 {isOpen?"":<button onClick={()=>{setIsOpen(!isOpen)}}>

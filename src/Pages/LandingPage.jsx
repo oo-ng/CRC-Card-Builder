@@ -2,7 +2,7 @@
 import { CardTemplate } from '../Components/CardTemplate'
 import { Header } from '../Components/Header'
 import addImg from '../assets/add.svg'
-import CRCImg from '../assets/CRC.png'
+import CRCImg from '../assets/crcCardImage.png'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
