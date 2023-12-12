@@ -6,6 +6,7 @@ import CRCImg from '../assets/CRC.png'
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import deleteButton from '../assets/delete.svg'
 
 
 
@@ -14,6 +15,14 @@ export const LandingPage = () => {
 
   const [savedProjects, setSavedProjects] = useState([]);
   const navigate = useNavigate();
+
+  function handleDelete(e, projectId) {
+    e.stopPropagation();
+    const updatedProjects = savedProjects.filter(project => project.id !== projectId);
+    setSavedProjects(updatedProjects);
+    localStorage.removeItem(projectId)
+  }
+  
   useEffect(() => {
       let projects = [];
       console.log(localStorage)
@@ -52,11 +61,15 @@ export const LandingPage = () => {
           <div className="grid  grid-cols-4 gap-10 mt-6 mb-10 ">
             
             {savedProjects.map((project, index) => (
-                        <Link key={index} to={`/setup/${project.id}`}>
+                        <div key={index} className='flex flex-col'>
+                        <Link to={`/setup/${project.id}`}>
                           <CardTemplate imgSrc={CRCImg} imgAlt="Description for Project">
                             {project.ProjectName}
                         </CardTemplate>
                         </Link>
+                        <button onClick={(e) => handleDelete(e,project.id)} className='w-5 h-5 border border-black'><img className='bg-red-500' src={deleteButton}/></button>
+                        </div>
+                        
                     ))}
             
           </div>

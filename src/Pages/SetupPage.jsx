@@ -249,7 +249,7 @@ export const SetupPage = () => {
                       
                         <div className="flex flex-grow justify-between ">
                        
-                            <p className="text-xl  border-b-2 border-black pr-28 p-3" p>
+                            <p className="text-xl  border-b-2 border-black pr-28 p-3">
                                 Responsibility
                             </p>
                             
